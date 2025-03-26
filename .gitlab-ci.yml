@@ -1,19 +1,22 @@
 image:
   name: gcr.io/kaniko-project/executor:latest
+  entrypoint:
+    - /kaniko/executor
+    - --context=$CI_PROJECT_DIR
+    - --dockerfile=$CI_PROJECT_DIR/Dockerfile
+    - --destination=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - --destination=$CI_REGISTRY_IMAGE:latest
+    - --insecure
+    - --skip-tls-verify
 
 stages:
   - build
 
 build_image:
   stage: build
+  # Our 'script:' is effectively empty, because the entrypoint does all the work
   script:
-    - /kaniko/executor
-      --context $CI_PROJECT_DIR
-      --dockerfile $CI_PROJECT_DIR/Dockerfile
-      --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
-      --destination $CI_REGISTRY_IMAGE:latest
-      --insecure
-      --skip-tls-verify
+    - echo "Kaniko ran as the entrypoint"
   only:
     changes:
       - Dockerfile
