@@ -16,5 +16,5 @@ build:
       executor
       --context $CI_PROJECT_DIR/beetroot
       --dockerfile $CI_PROJECT_DIR/beetroot/Dockerfile
-      --no-push
+      --destination $IMAGE_NAME
       --build-arg TIMEZONE=Europe/Oslo
