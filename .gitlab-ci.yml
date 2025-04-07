@@ -24,10 +24,11 @@ build:
     - docker build --build-arg TIMEZONE=Europe/Oslo -t $IMAGE_NAME .
     - echo "📤 Pushing Docker image to GitLab Container Registry..."
     - docker push $IMAGE_NAME
-  tags:
-    - docker
-  privileged: true
+ 
   rules:
     - changes:
         - Dockerfile
         - .gitlab-ci.yml
+  tags:
+    - docker
+  privileged: true
