@@ -14,7 +14,7 @@ stages:
 
 build:
   stage: build
-  tags: [docker-runner]  # Optional: use your specific GitLab Runner tag if needed
+  #tags: [docker-runner]  # Optional: use your specific GitLab Runner tag if needed
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build --build-arg TIMEZONE=Europe/Oslo -t $IMAGE_NAME ./beetroot
