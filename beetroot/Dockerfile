@@ -43,4 +43,4 @@ RUN apk add --no-cache tzdata && \
     
     # Start the Beetroot API
     ENTRYPOINT ["./beetroot"]
-    
+    # trigger
