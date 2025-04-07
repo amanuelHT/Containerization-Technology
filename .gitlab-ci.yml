@@ -8,12 +8,16 @@ build:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:latest
-    entrypoint: [""]
+    entrypoint:
+      - "/kaniko/executor"
   script:
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - --context=$CI_PROJECT_DIR/beetroot
+    - --dockerfile=$CI_PROJECT_DIR/beetroot/Dockerfile
+    - --destination=$IMAGE_NAME
+    - --build-arg=TIMEZONE=Europe/Oslo
     - >
-      /kaniko/executor
-      --context $CI_PROJECT_DIR/beetroot
-      --dockerfile $CI_PROJECT_DIR/beetroot/Dockerfile
-      --destination $IMAGE_NAME
-      --build-arg TIMEZONE=Europe/Oslo
+      --docker-config=/kaniko/.docker/
+    - >
+      --verbosity=debug
+    - >
+      --log-timestamp
