@@ -1,45 +1,46 @@
 # ---- Stage 1: Build ----
     FROM golang:1.22-alpine AS builder
 
-    # Install Git (required for go mod if private dependencies or VCS are involved)
+    # Install Git
     RUN apk add --no-cache git
     
-    # Set working directory
+    # Set working directory for source code
     WORKDIR /app
     
     # Clone Beetroot source code
     RUN git clone https://github.com/skandix/Beetroot.git .
     
-    # Move to the actual Go module directory
+    # Move into the folder where main go.mod is located
     WORKDIR /app/cmd/beetroot
     
-    # Fetch dependencies
+    # Fetch and tidy dependencies
     RUN go mod tidy
     
-    # Build the app and put binary in /app
+    # Build the Beetroot binary and place it in /app (shared path)
     RUN go build -o /app/beetroot
     
     # ---- Stage 2: Runtime ----
     FROM alpine:3.19
     
-    # Set timezone
-    ARG TIMEZONE=Europe/Oslo
-    ENV TZ=$TIMEZONE
-    
-    RUN apk add --no-cache tzdata && \
-        cp /usr/share/zoneinfo/$TZ /etc/localtime && \
-        echo "$TZ" > /etc/timezone && \
-        apk del tzdata
-    
-    # Set workdir for the app
+# Set environment variable for timezone (can be overridden)
+ARG TIMEZONE=Europe/Oslo
+ENV TZ=$TIMEZONE
+
+# Install tzdata and set timezone
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo "$TZ" > /etc/timezone && \
+    apk del tzdata
+
+    # Set working directory in runtime image
     WORKDIR /app
     
-    # Copy the binary from the builder
+    # Copy compiled binary from builder stage
     COPY --from=builder /app/beetroot .
     
-    # Expose port
+    # Expose the default app port
     EXPOSE 8080
     
-    # Start the app
+    # Start the Beetroot API
     ENTRYPOINT ["./beetroot"]
-    
+    # trigger
