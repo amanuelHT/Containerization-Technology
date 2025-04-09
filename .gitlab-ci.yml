@@ -10,7 +10,7 @@ build:
   script:
     - apk add --no-cache wget bash ca-certificates
     - mkdir -p /kaniko
-    - wget https://github.com/GoogleContainerTools/kaniko/releases/download/v1.22.0/executor -O /kaniko/executor
+    - wget https://github.com/GoogleContainerTools/kaniko/releases/latest/download/executor -O /kaniko/executor
     - chmod +x /kaniko/executor
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
