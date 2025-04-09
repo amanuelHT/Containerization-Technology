@@ -10,7 +10,7 @@ build:
   script:
     - apk add --no-cache curl bash
     - mkdir -p /kaniko
-    - curl -sSL https://storage.googleapis.com/kaniko-project/executor:v1.21.0 -o /kaniko/executor
+    - curl -sSL https://storage.googleapis.com/kaniko-project/executor -o /kaniko/executor
     - chmod +x /kaniko/executor
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
