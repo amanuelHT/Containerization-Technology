@@ -1,0 +1,10 @@
+services:
+  beetroot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: registry.internal.uia.no/ikt114-g-25v-it-orkestrering/labgroup12/exercise-02-containerization-technology:latest
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
