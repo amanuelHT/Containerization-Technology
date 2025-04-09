@@ -8,17 +8,24 @@ build:
   stage: build
   image: alpine:3.19.1
   script:
-    # Install necessary tools
     - apk add --no-cache wget bash ca-certificates
 
-    # Download Kaniko executor
+    # Download the CORRECT Kaniko binary
     - mkdir -p /kaniko
-    - wget https://github.com/GoogleContainerTools/kaniko/releases/download/v1.20.1/executor-linux-amd64 -O /kaniko/executor
+    - wget https://github.com/GoogleContainerTools/kaniko/releases/download/v1.20.1/executor -O /kaniko/executor
     - chmod +x /kaniko/executor
 
-    # Set up Docker config for auth
+    # Create Docker config for GitLab registry authentication
     - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - |
+      echo "{
+        \"auths\": {
+          \"$CI_REGISTRY\": {
+            \"username\": \"$CI_REGISTRY_USER\",
+            \"password\": \"$CI_REGISTRY_PASSWORD\"
+          }
+        }
+      }" > /kaniko/.docker/config.json
 
     # Run Kaniko build
     - >
