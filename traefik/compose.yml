@@ -1,0 +1,25 @@
+services:
+  beetroot:
+    image: ${BEETROOT_IMAGE}
+    env_file:
+      - ../beetroot/.env
+    volumes:
+      - ../beetroot/content.txt:/app/content.txt:ro
+    expose:
+      - "8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.beetroot.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.beetroot.entrypoints=web"
+      - "traefik.http.services.beetroot.loadbalancer.server.port=8080"
+
+  reverse_proxy:
+    image: traefik:v2.11
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

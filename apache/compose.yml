@@ -1,0 +1,18 @@
+services:
+  beetroot:
+    image: ${BEETROOT_IMAGE}
+    env_file:
+      - ../beetroot/.env
+    volumes:
+      - ../beetroot/content.txt:/app/content.txt:ro
+    expose:
+      - "8080"
+
+  reverse_proxy:
+    image: httpd:2.4
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+    depends_on:
+      - beetroot
