@@ -7,27 +7,14 @@ variables:
 build:
   stage: build
   image:
-    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    name: gcr.io/kaniko-project/executor:debug  # debug version includes shell
     entrypoint: [""]
   script:
-    # Create auth config for GitLab container registry
     - mkdir -p /kaniko/.docker
-    - |
-      echo "{
-        \"auths\": {
-          \"$CI_REGISTRY\": {
-            \"username\": \"$CI_REGISTRY_USER\",
-            \"password\": \"$CI_REGISTRY_PASSWORD\"
-          }
-        }
-      }" > /kaniko/.docker/config.json
-
-    # Run the Kaniko executor
-    - >
-      /kaniko/executor
-      --context=$CI_PROJECT_DIR/beetroot
-      --dockerfile=$CI_PROJECT_DIR/beetroot/Dockerfile
-      --destination=$IMAGE_NAME
-      --build-arg=TIMEZONE=Europe/Oslo
-      --verbosity=info
-      --docker-config=/kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor
+        --context=$CI_PROJECT_DIR/beetroot
+        --dockerfile=$CI_PROJECT_DIR/beetroot/Dockerfile
+        --destination=$IMAGE_NAME
+        --build-arg=TIMEZONE=Europe/Oslo
+        --verbosity=info
