@@ -4,7 +4,7 @@ services:
     env_file:
       - ../beetroot/.env
     volumes:
-      - ../beetroot/content.txt:/app/content.txt:ro
+      - ../beetroot/content.txt:/dev/shm/.secret:ro
     expose:
       - "8080"
     labels:

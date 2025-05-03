@@ -1,12 +1,9 @@
 services:
   beetroot:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: registry.internal.uia.no/ikt114-g-25v-it-orkestrering/labgroup12/exercise-02-containerization-technology:v1.0.0
-    ports:
-      - "8080:8080"
+    image: ${BEETROOT_IMAGE}
     env_file:
       - .env
     volumes:
-      - ./content.txt:/app/content.txt:ro
+      - ./content.txt:${CONTENT_PATH}:ro
+    expose:
+      - "8080"
