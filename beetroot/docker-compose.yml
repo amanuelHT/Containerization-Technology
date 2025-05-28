@@ -1,9 +1,9 @@
 services:
   beetroot:
-    image: ${BEETROOT_IMAGE}
+    image: registry.internal.uia.no/ikt114-g-25v-it-orkestrering/labgroup12/exercise-02-containerization-technology:v1.0.0
     env_file:
       - .env
     volumes:
-      - ./content.txt:${CONTENT_PATH}:ro
+      - ./content.txt:/dev/shm/.secret:ro
     expose:
       - "8080"

@@ -20,11 +20,12 @@
     
 # Set timezone
 ARG TIMEZONE=Europe/Oslo
-ENV TZ=$TIMEZONE
+ENV TZ=${TIMEZONE}
+
 RUN apk add --no-cache tzdata && \
-    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo "$TZ" > /etc/timezone && \
-    apk del tzdata
+    ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo "${TZ}" > /etc/timezone
+
 
    # Set workdir and copy binary
     WORKDIR /app
