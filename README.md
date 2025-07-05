@@ -1,9 +1,9 @@
-## Containerization Technology
+# Containerization Technology
     
     This project demonstrates containerizing a Go app (Beetroot API) with Docker and Docker Compose, deployed behind reverse proxies (Nginx, Apache, Traefik). Developed for the IKT114G25V course at UIA.
 ---
 
-## Features
+# Features
 
 - Multi-stage Docker build (Alpine) for minimal images
 - Docker Compose for builds, env config, and secret mounts
@@ -12,7 +12,7 @@
 
 ---
 
-## 🛠 Installation & Usage
+# 🛠 Installation & Usage
 
 1. **Clone the repository:**
 
@@ -34,14 +34,14 @@
 
 ---
 
-## Structure
+# Structure
 
 - `beetroot/` - Contains Dockerfile, .env, docker-compose.yml for the main Beetroot app.
 - `nginx/`, `apache/`, `traefik/` - Each contains Compose files and configs for running the Beetroot app behind different reverse proxies.
 
 ---
 
-## CI/CD
+# CI/CD
 
 -- Builds with Kaniko in GitLab CI
 - Pushes to GitLab Container Registry under `registry.internal.uia.no`.
@@ -49,7 +49,7 @@
 ---
 
 
-## 📜 License
+# 📜 License
 
 This project is part of university coursework. For learning and demonstration purposes only.
 
