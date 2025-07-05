@@ -1,6 +1,6 @@
 # Containerization Technology
-
-This project demonstrates containerizing a Go app (Beetroot API) with Docker and Docker Compose, deployed behind reverse proxies (Nginx, Apache, Traefik). Developed for the IKT114G25V course at UIA.
+    
+    This project demonstrates containerizing a Go app (Beetroot API) with Docker and Docker Compose, deployed behind reverse proxies (Nginx, Apache, Traefik). Developed for the IKT114G25V course at UIA.
 ---
 
 ## Features
