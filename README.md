@@ -42,7 +42,6 @@ This project demonstrates containerizing a Go app (Beetroot API) with Docker and
 # CI/CD
 
 -- Builds with Kaniko in GitLab CI
-- Pushes to GitLab Container Registry under `registry.internal.uia.no`.
 
 
 
